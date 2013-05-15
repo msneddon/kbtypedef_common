@@ -14,8 +14,9 @@ module KB {
     */
     typedef list<kb_id> kb_ids;
 
+
     /*
-    An integer seconds since epoch
+    An integer, seconds since epoch
     */ 
     typedef int timestamp;
 
