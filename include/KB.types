@@ -1,0 +1,17 @@
+/*
+The collection of basic, core KBase typed objects.
+*/
+module KB {
+
+    /*
+    A standard KBase ID that begins with 'kb|'.
+    */
+    typedef string kb_id;
+    
+    
+    /*
+    An ordered list of KBase IDs.
+    */
+    typedef list<kb_id> kb_ids;
+
+}
