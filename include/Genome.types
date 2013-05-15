@@ -1,0 +1,74 @@
+module Genome {
+
+    /*
+    A standard KBase id for a contig
+    */
+    typedef kb_id contig_id;
+
+
+    /*
+    A simple Contig data structure for contig sequences that have KBase IDs
+    */
+    typedef structure {
+        contig_id id;
+        string dna;
+    } Contig;
+
+    /*
+    Annotation was orginially defined as:
+    tuple<comment,annotator,annotation_time> annotation 
+    */
+
+    typedef structure {
+        string comment;
+        string annotator;
+        timestamp annotation_time;
+    } Annotation;
+
+
+    /*
+    A standard KBase id for a feature
+    */
+    typedef feature_id kb_id;
+
+    /*
+    A standard KBase feature type, should be enum
+    */
+    typedef string feature_type;
+
+    /*
+    A KBase object for feature data on a dna sequence
+    */
+    typedef structure {
+       feature_id id;
+       location location;
+       feature_type type;
+       string function;
+       string protein_translation;
+       list<string> aliases;
+       list<annotation> annotations;
+    } Feature;
+
+
+
+
+
+    /*
+    A standard KBase id for a genome
+    */
+    typedef kb_id genome_id;
+
+    /*
+    A KBase object for a genome
+    */
+    typedef structure {
+        genome_id id;
+        string scientific_name;
+        string domain;
+        int genetic_code;
+        string source;
+        string source_id;
+        list<Contig> contigs;
+        list<Feature> features;
+    } Genome;
+};
