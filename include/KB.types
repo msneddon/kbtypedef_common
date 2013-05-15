@@ -14,4 +14,4 @@ module KB {
     */
     typedef list<kb_id> kb_ids;
 
-}
+};
