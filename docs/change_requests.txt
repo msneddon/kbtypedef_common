@@ -1,0 +1,47 @@
+------------------------------------------------------------------------------ 
+Once software is placed in a controlled baseline, all changes are tracked. A
+distinction must be made for the cause of a change. The change categories are:
+
+Type 0: Critical failures, which are defects that are nearly always fixed 
+before any external release. In general, these sorts of changes represent 
+showstoppers that have an impact on the usability of the software in its
+critical use cases.
+ 
+Type 1: A bug or defect that either does not impair the usefulness of the 
+system or can be worked around. Such errors tend to correlate with nuisances
+in critical use cases or serious defects in secondary use cases that have a 
+low probability of occurrence.
+
+Type 2: A change that is an enhancement rather than a response to a defect.
+Its purpose is typically to improve performance, testability, usability, or
+some other aspect of quality that represents good value engineering.
+
+Type 3: A change that is necessitated by an update to the requirements. This 
+could be new features or capabilities that are outside the scope of the 
+current vision and business case.
+
+Type 4: Changes that are not accommodated by the other categories. 
+------------------------------------------------------------------------------
+DATE		
+CHANGE	
+PURPOSE	
+TYPE			
+REQUESTOR		
+APPROVED BY		
+APPROVAL DATE	
+CHANGED BY  
+CHANGE DATE 
+FILES AFFECTED
+COMMENT
+
+DATE	05/16/2013
+CHANGE	add changes.txt file
+PURPOSE	to manage changes
+TYPE	3
+REQUESTOR	Tom
+APPROVED BY	Mike
+APPROVAL DATE	05/16/2013
+CHANGED BY	Tom
+CHANGE DATE	05/16/2013
+FILES AFFECTED	none
+COMMENT	new file created
