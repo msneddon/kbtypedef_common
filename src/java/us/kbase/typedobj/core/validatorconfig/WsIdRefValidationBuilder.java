@@ -139,7 +139,7 @@ public class WsIdRefValidationBuilder {
 	    	//the valid typed object names
 	    	if(node.getNodeType() == JsonNodeType.STRING) {
 	    		ProcessingMessage pm = new ProcessingMessage()
-										.setMessage("kb-id-reference")
+										.setMessage(WsIdRefValidationBuilder.keyword)
 										.put("id", node.textValue())
 										.put("type", validTypedObjectNames)
 		    							.put("location",schemaLocation.getPointer());
@@ -151,9 +151,8 @@ public class WsIdRefValidationBuilder {
 	    		Iterator<Entry<String, JsonNode>> fields= node.fields();
 	    		while(fields.hasNext()) {
 	    			Entry<String,JsonNode> f = fields.next();
-			    	System.err.println("got an id as a key in a mapping: "+f.getKey());
 			    	ProcessingMessage pm = new ProcessingMessage()
-											.setMessage("kb-id-reference")
+											.setMessage(WsIdRefValidationBuilder.keyword)
 											.put("id", f.getKey())
 											.put("type", validTypedObjectNames)
 			    							.put("location",schemaLocation.getPointer());
