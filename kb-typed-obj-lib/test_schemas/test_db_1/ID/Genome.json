@@ -1,0 +1,98 @@
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"Genome",
+    "description":"@ws_searchable size\n@ws_searchable keys_of feature_data",
+    "type":"object",
+    "kb-type":"structure",
+    "kb-ws-searchable-fields":["size"],
+    "kb-ws-searchable-keys":["feature_data"],
+    "properties": {
+        "name": {
+            "type":"string",
+            "kb-type":"string"
+        },
+        "size": {
+            "type":"integer",
+            "kb-type":"int"
+        },
+        "best_feature": {
+            "type":"string",
+            "kb-type":"string",
+            "kb-id-reference":["ID.Feature"]
+        },
+        "all_features": {
+            "type":"array",
+            "kb-type":"list",
+            "items": {
+                "type":"string",
+                "kb-type":"string",
+                "kb-id-reference":["ID.Feature"]
+            }
+        },
+        "some_ref": {
+            "type":"string",
+            "kb-type":"string",
+            "kb-id-reference":["ID.Feature"]
+        },
+        "f2role_mapping": {
+            "type":"object",
+            "kb-type":"mapping",
+            "kb-id-reference":["ID.Feature"],
+            "additionalProperties": {
+                "type":"string",
+                "kb-type":"string"
+            }
+        },
+        "feature_data": {
+            "type":"object",
+            "kb-type":"mapping",
+            "kb-id-reference":["ID.Feature"],
+            "additionalProperties": {
+                "type":"object",
+                "kb-type":"structure",
+                "properties": {
+                    "name": {
+                        "type":"string",
+                        "kb-type":"string"
+                    },
+                    "id": {
+                        "type":"string",
+                        "kb-type":"string",
+                        "kb-id-reference":["ID.Feature"]
+                    },
+                    "start": {
+                        "type":"integer",
+                        "kb-type":"int"
+                    },
+                    "end": {
+                        "type":"integer",
+                        "kb-type":"int"
+                    },
+                    "other_ids": {
+                        "type":"array",
+                        "kb-type":"list",
+                        "items": {
+                            "type":"string",
+                            "kb-type":"string",
+                            "kb-id-reference":["ID.Feature"]
+                        }
+                    },
+                    "sizes": {
+                        "type":"object",
+                        "kb-type":"mapping",
+                        "kb-id-reference":["ID.Feature"],
+                        "additionalProperties": {
+                            "type":"string",
+                            "kb-type":"string",
+                            "kb-id-reference":["ID.Feature"]
+                        }
+                    }
+                },
+                "additionalProperties":true,
+                "required":["name","id","start","end","other_ids","sizes"]
+            }
+        }
+    },
+    "additionalProperties":true,
+    "required":["name","size","best_feature","all_features","some_ref","f2role_mapping","feature_data"]
+}

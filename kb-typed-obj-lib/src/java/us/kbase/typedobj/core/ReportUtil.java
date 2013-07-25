@@ -6,6 +6,8 @@ import java.util.Iterator;
 import us.kbase.typedobj.core.validatorconfig.WsIdRefValidationBuilder;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.fge.jsonschema.report.ProcessingMessage;
 import com.github.fge.jsonschema.report.ProcessingReport;
 
@@ -22,7 +24,7 @@ public class ReportUtil {
 			if( m.getMessage().compareTo(WsIdRefValidationBuilder.keyword) != 0 ) {
 				continue;
 			}
-			ids.add(m.asJson().findValue("id").asText());
+			ids.add(m.asJson().get("id").asText());
 		}
 		return ids;
 	}
@@ -36,8 +38,8 @@ public class ReportUtil {
 			if( m.getMessage().compareTo(WsIdRefValidationBuilder.keyword) != 0 ) {
 				continue;
 			}
-			String id = m.asJson().findValue("id").asText();
-			JsonNode types = m.asJson().findValue("type");
+			String id = m.asJson().get("id").asText();
+			JsonNode types = m.asJson().get("type");
 			ArrayList<String> typesList = new ArrayList<String>(types.size());
 			for(int k=0; k<types.size(); k++) {
 				typesList.add(types.get(k).asText());
@@ -47,6 +49,39 @@ public class ReportUtil {
 		}
 		return ids;
 	}
+	
+	
+	public static final String getSearchableSubsetAsJsonString(ProcessingReport report) {
+		return getSearchableSubset(report).toString();
+	}
+	
+	public static final JsonNode getSearchableSubset(ProcessingReport report) {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode subset = mapper.createObjectNode();
+		Iterator<ProcessingMessage> mssgs = report.iterator();
+		while(mssgs.hasNext()) {
+			ProcessingMessage m = mssgs.next();
+			if( m.getMessage().compareTo("ws-searchable-fields-subset") == 0 ) {
+				JsonNode fieldsSubset = m.asJson().get("value");
+				Iterator<String> fieldNames = fieldsSubset.fieldNames();
+				while(fieldNames.hasNext()) {
+					String fieldName = fieldNames.next();
+					subset.put(fieldName, fieldsSubset.findValue(fieldName));
+				}
+			} else if( m.getMessage().compareTo("ws-searchable-keys-subset") == 0 ) {
+				JsonNode fieldsSubset = m.asJson().get("keys_of");
+				Iterator<String> fieldNames = fieldsSubset.fieldNames();
+				while(fieldNames.hasNext()) {
+					String fieldName = fieldNames.next();
+					subset.put(fieldName, fieldsSubset.findValue(fieldName));
+				}
+			}
+		}
+		return subset;
+	}
+	
+	
+	
 	
 	/**
 	 * Wrapper class that stores a workspace ID with a list of possible typed objects

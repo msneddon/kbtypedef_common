@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.fge.jackson.NodeType;
@@ -32,12 +33,12 @@ import com.github.fge.msgsimple.source.MessageSource;
  * This class wraps everything required to identify report ws-searchable fields.
  * @author msneddon
  */
-public class WsSearchableFieldsValidationBuilder {
+public class WsSearchableKeysValidationBuilder {
 
 	/**
 	 * Declare the keyword that will be parsed
 	 */
-	public static final String keyword = "kb-ws-searchable-fields";
+	public static final String keyword = "kb-ws-searchable-keys";
 	
 	/**
 	 * Method for generating a Keyword object which can be added to a JSON
@@ -47,10 +48,10 @@ public class WsSearchableFieldsValidationBuilder {
 	 */
 	public static Keyword getKeyword() {
 		final Keyword kbTypeKeyword = 
-				Keyword.newBuilder(WsSearchableFieldsValidationBuilder.keyword)
-				.withSyntaxChecker(WsSearchableFieldsSyntaxChecker.getInstance())
-				.withDigester(WsSearchableFieldsDigester.getInstance())
-				.withValidatorClass(WsSearchableFieldsKeywordValidator.class).freeze();
+				Keyword.newBuilder(WsSearchableKeysValidationBuilder.keyword)
+				.withSyntaxChecker(WsSearchableKeysSyntaxChecker.getInstance())
+				.withDigester(WsSearchableKeysDigester.getInstance())
+				.withValidatorClass(WsSearchableKeysKeywordValidator.class).freeze();
 		return kbTypeKeyword;
 	}
 	
@@ -61,8 +62,8 @@ public class WsSearchableFieldsValidationBuilder {
 	 * @return MessageSource
 	 */
 	public static MessageSource getErrorMssgSrc() {
-		final String key = "wsSearchableFields";
-		final String value = "i hath found error in kb-ws-searchable-fields";
+		final String key = "wsSearchableKeys";
+		final String value = "i hath found error in kb-ws-searchable-keys";
 		final MessageSource source = MapMessageSource.newBuilder()
 				.put(key, value).build();
 		return source;
@@ -80,25 +81,25 @@ public class WsSearchableFieldsValidationBuilder {
 	 * as part of the final ProcessingReport.
 	 * @author msneddon
 	 */
-	private static final class WsSearchableFieldsDigester extends AbstractDigester {
+	private static final class WsSearchableKeysDigester extends AbstractDigester {
 		
-		private static final Digester INSTANCE = new WsSearchableFieldsDigester();
+		private static final Digester INSTANCE = new WsSearchableKeysDigester();
 
 		public static Digester getInstance() {
 			return INSTANCE;
 		}
 
-		private WsSearchableFieldsDigester() {
+		private WsSearchableKeysDigester() {
 			// The Digester must declare the types of nodes that it can operate on.  In this case,
 			// the searchable fields can only be marked for a typed object
-	        super(WsSearchableFieldsValidationBuilder.keyword, NodeType.OBJECT);
+	        super(WsSearchableKeysValidationBuilder.keyword, NodeType.OBJECT);
 	    }
 
 	    @Override
 	    public JsonNode digest(final JsonNode schema) {
 	    	// we don't really care about the context in this case, we just want the array
 	        // containing the list of searchable fields
-	        return schema.findValue(WsSearchableFieldsValidationBuilder.keyword);
+	        return schema.findValue(WsSearchableKeysValidationBuilder.keyword);
 	    }
 	}
 	
@@ -107,7 +108,7 @@ public class WsSearchableFieldsValidationBuilder {
 	 * This class defines the method that performs the actual validation of the instance.
 	 * @author msneddon
 	 */
-	public static final class WsSearchableFieldsKeywordValidator extends AbstractKeywordValidator {
+	public static final class WsSearchableKeysKeywordValidator extends AbstractKeywordValidator {
 		
 		/**
 		 * Store the digested Json Schema node, which has already been digested to include
@@ -115,9 +116,9 @@ public class WsSearchableFieldsValidationBuilder {
 		 */
 		private ArrayList<String> fieldList;
 		
-		public WsSearchableFieldsKeywordValidator(final JsonNode digest) {
-			super(WsSearchableFieldsValidationBuilder.keyword);
-			fieldList = new ArrayList<String>(20); // a starting size of 20 **should** be usually big enough
+		public WsSearchableKeysKeywordValidator(final JsonNode digest) {
+			super(WsSearchableKeysValidationBuilder.keyword);
+			fieldList = new ArrayList<String>(digest.size());
 			Iterator <JsonNode> iter = digest.elements();
 			while(iter.hasNext()) {
 				fieldList.add(iter.next().asText());
@@ -138,63 +139,62 @@ public class WsSearchableFieldsValidationBuilder {
 		{
 			// get the node we are looking at and the SchemaTree 
 			JsonNode node = data.getInstance().getNode();
-			SchemaTree schemaLocation = data.getSchema();
 			
 			// extract out everything specified as a field
 			ObjectMapper mapper = new ObjectMapper();
-			ObjectNode extract = mapper.createObjectNode();
+			ObjectNode keys_of = mapper.createObjectNode();
 			
 			for(int k=0; k<fieldList.size(); k++) {
 				String field_name = fieldList.get(k);
 				
-				// here is where a field name may be split to reference nested fields
+				// here is where a field name may be split to reference  keys_of nested fields
 				// but for now we don't support this
 				//field_name.split(".");
 				
-				JsonNode value = node.findValue(field_name);
-				if(value != null) {
-					extract.put(field_name, value);
+				JsonNode kbase_mapping = node.findValue(field_name);
+				Iterator <String> keys = kbase_mapping.fieldNames();
+				ArrayNode keys_list = mapper.createArrayNode();
+				while(keys.hasNext()) {
+					String key = keys.next();
+					keys_list.add(key);
 				}
+				keys_of.put(field_name, keys_list);
 			}
-			
 			
 			// assemble the subset object for return
 			ProcessingMessage pm = new ProcessingMessage()
-											.setMessage("ws-searchable-fields-subset")
-											.put("value", extract);
+											.setMessage("ws-searchable-keys-subset")
+											.put("keys_of", keys_of);
 			report.info(pm);
-	    	
 			
-	    	return;
-	    }
+			return;
+		}
 
-	    @Override
-	    public String toString() {
-	        return "WsSearchableFieldsKeywordValidator set to validate:" + fieldList;
-	    }
+		@Override
+		public String toString() {
+			return "WsSearchableFieldsKeywordValidator set to validate:" + fieldList;
+		}
 	}
 	
 	
 	
 	/**
-	 * This class checks the information in the json schema to make sure it is
-	 * correct.  If not, we throw an error.
+	 * This class checks the information in the Json Schema to make sure it is
+	 * correct.  It does very little because we assume the the Json Schema is valid
 	 * @author msneddon
 	 *
 	 */
-	private static final class WsSearchableFieldsSyntaxChecker extends AbstractSyntaxChecker {
+	private static final class WsSearchableKeysSyntaxChecker extends AbstractSyntaxChecker {
 	
-		private static final SyntaxChecker INSTANCE = new WsSearchableFieldsSyntaxChecker();
+		private static final SyntaxChecker INSTANCE = new WsSearchableKeysSyntaxChecker();
 		
 		public static SyntaxChecker getInstance() {
 			return INSTANCE;
 		}
 		
-		private WsSearchableFieldsSyntaxChecker()
-		{
-		    // When constructing, the name for the keyword must be provided along with the allowed type for the value
-		    super(WsSearchableFieldsValidationBuilder.keyword, NodeType.ARRAY);
-	    	//System.err.println("creating a syntax checker");
+		private WsSearchableKeysSyntaxChecker() {
+			// the schema must contain a list of values
+			super(WsSearchableKeysValidationBuilder.keyword, NodeType.ARRAY);
 		}
 		
 		@Override
@@ -205,75 +205,7 @@ public class WsSearchableFieldsValidationBuilder {
 				final SchemaTree tree)
 						throws ProcessingException
 		{
-			//report.warn(newMsg(tree, bundle, "ha! i detected your kb-type"));
-	
-			// we got here, so we know that in the schema we have properly set the ids as an array, but
-			// we have to confirm that all the nodes are 
-			
-			
-		    final JsonNode node = getNode(tree);
-//			System.err.println(node.asDouble());
-//			System.err.println("pointers");
-//			Iterator<JsonPointer> i = pointers.iterator();
-//			JsonPointer p;
-//			while(i.hasNext()) {
-//				p = i.next();
-//				System.out.println(p);
-//			}
-//			
-			
-			//newMsg(tree, bundle, "emptyArray");
-			
-			
-			
-		    /*
-		     * Using AbstractSyntaxChecker as a base, we know that when we reach
-		     * this method, the value has already been validated as being of
-		     * the allowed primitive types (only array here).
-		     *
-		     * But this is not enough for this particular validator: we must
-		     * also ensure that all elements of this array are integers. Cycle
-		     * through all elements of the array and check each element. If we
-		     * encounter a non integer argument, add a message.
-		     *
-		     * We must also check that there is at lease one element, that the
-		     * array contains no duplicates and that all elements are positive
-		     * integers and strictly greater than 0.
-		     *
-		     * The getNode() method grabs the value of this keyword for us, so
-		     * use that. Note that we also reuse some messages already defined
-		     * in SyntaxMessages.
-		    final JsonNode node = getNode(tree);
-		
-		    final int size = node.size();
-		
-		    if (size == 0) {
-		        report.error(newMsg(tree, bundle, "emptyArray"));
-		        return;
-		    }
-		
-		    NodeType type;
-		    JsonNode element;
-		    boolean uniqueItems = true;
-		
-		    final Set<JsonNode> set = Sets.newHashSet();
-		
-		    for (int index = 0; index < size; index++) {
-		        element = node.get(index);
-		        type = NodeType.getNodeType(element);
-		        if (type != NodeType.INTEGER)
-		            report.error(newMsg(tree, bundle, "incorrectElementType")
-		                .put("expected", NodeType.INTEGER)
-		                .put("found", type));
-		        else if (element.bigIntegerValue().compareTo(BigInteger.ONE) < 0)
-		            report.error(newMsg(tree, bundle, "integerIsNegative")
-		                .put("value", element));
-		        uniqueItems = set.add(element);
-		    }
-		
-		    if (!uniqueItems)
-		        report.error(newMsg(tree, bundle, "elementsNotUnique"));
-		    */
+			// we assume that the Json Schema has already been validated
 		}
 	}
 	

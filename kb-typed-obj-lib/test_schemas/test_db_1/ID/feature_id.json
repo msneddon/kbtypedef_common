@@ -1,0 +1,8 @@
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"feature_id",
+    "description":"@id_reference ID.Feature",
+    "type":"string",
+    "kb-type":"string",
+    "kb-id-reference":["ID.Feature"]
+}

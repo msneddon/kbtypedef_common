@@ -47,9 +47,9 @@ public class WsIdRefValidationBuilder {
 	public static Keyword getKeyword() {
 		final Keyword kbTypeKeyword = 
 				Keyword.newBuilder(WsIdRefValidationBuilder.keyword)
-	            	.withSyntaxChecker(WsIdRefSyntaxChecker.getInstance())
-	            	.withDigester(WsIdRefDigester.getInstance())
-	            	.withValidatorClass(WsIdRefKeywordValidator.class).freeze();
+					.withSyntaxChecker(WsIdRefSyntaxChecker.getInstance())
+					.withDigester(WsIdRefDigester.getInstance())
+					.withValidatorClass(WsIdRefKeywordValidator.class).freeze();
 		return kbTypeKeyword;
 	}
 	
@@ -61,10 +61,10 @@ public class WsIdRefValidationBuilder {
 	 */
 	public static MessageSource getErrorMssgSrc() {
 		final String key = "idRefError";
-        final String value = "i hath found error in kb-id-reference";
-        final MessageSource source = MapMessageSource.newBuilder()
-            .put(key, value).build();
-        return source;
+		final String value = "i hath found error in kb-id-reference";
+		final MessageSource source = MapMessageSource.newBuilder()
+				.put(key, value).build();
+		return source;
 	}
 	
 	
@@ -83,22 +83,22 @@ public class WsIdRefValidationBuilder {
 		
 		private static final Digester INSTANCE = new WsIdRefDigester();
 
-	    public static Digester getInstance() {
-	        return INSTANCE;
-	    }
+		public static Digester getInstance() {
+			return INSTANCE;
+		}
 
-	    private WsIdRefDigester() {
-	    	// The Digester must declare the types of nodes that it can operate on.  In this case,
-	    	// the NodeType of the instance can only be a String or an Object (a kbase mapping)
-	        super(WsIdRefValidationBuilder.keyword, NodeType.STRING, NodeType.OBJECT);
-	    }
+		private WsIdRefDigester() {
+			// The Digester must declare the types of nodes that it can operate on. In this case,
+			// the NodeType of the instance can only be a String or an Object (a kbase mapping)
+			super(WsIdRefValidationBuilder.keyword, NodeType.STRING, NodeType.OBJECT);
+		}
 
-	    @Override
-	    public JsonNode digest(final JsonNode schema) {
-	    	// we don't really care about the context in this case, we just want the array
-	        // containing the list of possible typed objects that this ID can map to.
-	        return schema.findValue(WsIdRefValidationBuilder.keyword);
-	    }
+		@Override
+		public JsonNode digest(final JsonNode schema) {
+			// we don't really care about the context in this case, we just want the array
+			// containing the list of possible typed objects that this ID can map to.
+			return schema.findValue(WsIdRefValidationBuilder.keyword);
+		}
 	}
 	
 	
@@ -184,7 +184,7 @@ public class WsIdRefValidationBuilder {
 		
 		/* this tells us what exceptions to throw if we run into an invalid schema */
 		private static final ExceptionProvider EXCEPTION_PROVIDER
-        	= new ExceptionProvider()
+			= new ExceptionProvider()
 		{
 			@Override
 			public ProcessingException doException(final ProcessingMessage message) {
@@ -198,9 +198,9 @@ public class WsIdRefValidationBuilder {
 		
 		private WsIdRefSyntaxChecker()
 		{
-		    // When constructing, the name for the keyword must be provided along with the allowed type for the value
-		    super(WsIdRefValidationBuilder.keyword, NodeType.ARRAY);
-	    	//System.err.println("creating a syntax checker");
+			// When constructing, the name for the keyword must be provided along with the allowed type for the value
+			super(WsIdRefValidationBuilder.keyword, NodeType.ARRAY);
+			//System.err.println("creating a syntax checker");
 		}
 		
 		@Override
@@ -211,75 +211,9 @@ public class WsIdRefValidationBuilder {
 				final SchemaTree tree)
 						throws ProcessingException
 		{
-			//report.warn(newMsg(tree, bundle, "ha! i detected your kb-type"));
-	
-			// we got here, so we know that in the schema we have properly set the ids as an array, but
-			// we have to confirm that all the nodes are 
-			
-			
-		    final JsonNode node = getNode(tree);
-//			System.err.println(node.asDouble());
-//			System.err.println("pointers");
-//			Iterator<JsonPointer> i = pointers.iterator();
-//			JsonPointer p;
-//			while(i.hasNext()) {
-//				p = i.next();
-//				System.out.println(p);
-//			}
-//			
-			
-			//newMsg(tree, bundle, "emptyArray");
-			
-			
-			
-		    /*
-		     * Using AbstractSyntaxChecker as a base, we know that when we reach
-		     * this method, the value has already been validated as being of
-		     * the allowed primitive types (only array here).
-		     *
-		     * But this is not enough for this particular validator: we must
-		     * also ensure that all elements of this array are integers. Cycle
-		     * through all elements of the array and check each element. If we
-		     * encounter a non integer argument, add a message.
-		     *
-		     * We must also check that there is at lease one element, that the
-		     * array contains no duplicates and that all elements are positive
-		     * integers and strictly greater than 0.
-		     *
-		     * The getNode() method grabs the value of this keyword for us, so
-		     * use that. Note that we also reuse some messages already defined
-		     * in SyntaxMessages.
-		    final JsonNode node = getNode(tree);
-		
-		    final int size = node.size();
-		
-		    if (size == 0) {
-		        report.error(newMsg(tree, bundle, "emptyArray"));
-		        return;
-		    }
-		
-		    NodeType type;
-		    JsonNode element;
-		    boolean uniqueItems = true;
-		
-		    final Set<JsonNode> set = Sets.newHashSet();
-		
-		    for (int index = 0; index < size; index++) {
-		        element = node.get(index);
-		        type = NodeType.getNodeType(element);
-		        if (type != NodeType.INTEGER)
-		            report.error(newMsg(tree, bundle, "incorrectElementType")
-		                .put("expected", NodeType.INTEGER)
-		                .put("found", type));
-		        else if (element.bigIntegerValue().compareTo(BigInteger.ONE) < 0)
-		            report.error(newMsg(tree, bundle, "integerIsNegative")
-		                .put("value", element));
-		        uniqueItems = set.add(element);
-		    }
-		
-		    if (!uniqueItems)
-		        report.error(newMsg(tree, bundle, "elementsNotUnique"));
-		    */
+			// this checks the values in the JSON Schema, which at this point should not
+			// be required because all registered JSON Schemas have already been validated when they
+			// are first registered
 		}
 	}
 	

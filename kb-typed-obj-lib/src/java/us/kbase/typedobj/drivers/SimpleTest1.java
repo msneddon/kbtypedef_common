@@ -11,7 +11,6 @@ import com.github.fge.jsonschema.report.ProcessingReport;
 
 
 
-
 public class SimpleTest1 {
 
 	/**
@@ -20,7 +19,7 @@ public class SimpleTest1 {
 	public static void main(String[] args) throws Exception {
 		
 		// Create a simple db
-		TypeDefinitionDB db            = new SimpleTypeDefinitionDB("schema_db");
+		TypeDefinitionDB db            = new SimpleTypeDefinitionDB("kb-typed-obj-lib/test_schemas/test_db_1");
 		
 		// Create a simple validator that finds objects using the db
 		TypedObjectValidator validator = new TypedObjectValidator(db);
@@ -38,13 +37,14 @@ public class SimpleTest1 {
 		ProcessingReport report2 = validator.validate(instance1RootNode, "ID", "Feature");
 		System.out.println("VALIDATION MESSAGE 2\n"+report2.toString());
 		
+		// print the 
+		System.out.println(instance1RootNode);
 		
 		// Pull out the list of IDs from the report
 		System.out.println(ReportUtil.getIdList(report2));
 		
-		
 		// Pull out the searchable subset from the report
-		
+		System.out.println(ReportUtil.getSearchableSubset(report2));
 		
 	}
 	

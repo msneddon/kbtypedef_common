@@ -1,0 +1,49 @@
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"Feature",
+    "description":"@ws_searchable name id",
+    "type":"object",
+    "kb-type":"structure",
+    "kb-ws-searchable-fields":["name","id"],
+    "kb-ws-searchable-keys":["sizes"],
+    "properties": {
+        "name": {
+            "type":"string",
+            "kb-type":"string"
+        },
+        "id": {
+            "type":"string",
+            "kb-type":"string",
+            "kb-id-reference":["ID.Feature"]
+        },
+        "start": {
+            "type":"integer",
+            "kb-type":"int"
+        },
+        "end": {
+            "type":"integer",
+            "kb-type":"int"
+        },
+        "other_ids": {
+            "type":"array",
+            "kb-type":"list",
+            "items": {
+                "type":"string",
+                "kb-type":"string",
+                "kb-id-reference":["ID.Feature"]
+            }
+        },
+        "sizes": {
+            "type":"object",
+            "kb-type":"mapping",
+            "kb-id-reference":["ID.Feature"],
+            "additionalProperties": {
+                "type":"string",
+                "kb-type":"string",
+                "kb-id-reference":["ID.Feature"]
+            }
+        }
+    },
+    "additionalProperties":true,
+    "required":["name","id","start","end","other_ids","sizes"]
+}
