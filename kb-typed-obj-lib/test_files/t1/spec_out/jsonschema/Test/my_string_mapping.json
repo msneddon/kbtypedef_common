@@ -1,0 +1,33 @@
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_string_mapping",
+    "description":"",
+    "type":"object",
+    "kb-type":"mapping",
+    "additionalProperties": {
+        "type":"string",
+        "kb-type":"string"
+    }
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_string_mapping",
+    "description":"",
+    "type":"object",
+    "kb-type":"mapping",
+    "additionalProperties": {
+        "type":"string",
+        "kb-type":"string"
+    }
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_string_mapping",
+    "description":"",
+    "type":"object",
+    "kb-type":"mapping",
+    "additionalProperties": {
+        "type":"string",
+        "kb-type":"string"
+    }
+}

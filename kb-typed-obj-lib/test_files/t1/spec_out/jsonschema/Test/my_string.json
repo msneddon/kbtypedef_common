@@ -1,0 +1,21 @@
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_string",
+    "description":"",
+    "type":"string",
+    "kb-type":"string"
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_string",
+    "description":"",
+    "type":"string",
+    "kb-type":"string"
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_string",
+    "description":"",
+    "type":"string",
+    "kb-type":"string"
+}

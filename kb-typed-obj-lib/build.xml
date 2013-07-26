@@ -1,0 +1,80 @@
+<project name="kb-typed-obj-lib" default="clean-build" basedir=".">
+
+	<description>
+		Build file for the KBase Typed Object Library
+	</description>
+
+	<property name="version" value="0.1.0" />
+	
+	<!-- this property allows us to reference environment variables as env.VAR -->
+	<property environment="env" />
+	
+	<property name="lib.dir"         value="lib" />
+	<property name="src.dir"         value="src/java" />
+	<property name="class.dir"       value="bin/java" />
+	<property name="out.dir"         value="bin/java" />
+	<property name="doc.dir"         value="doc/javadoc" />
+	<property name="jar.dir"         value="bin" />
+	<property name="jar.loc"         value="${jar.dir}/${ant.project.name}-${version}.jar" />
+	<property name="test_files.dir"  value="test_files" />
+	
+	<path id="jarpath" location="${jar.loc}" />
+	<path id="generate_schemas_test_path" location="${test_files.dir}/generate_schemas.sh" />
+	
+	<path id="classpath">
+		<fileset dir="${lib.dir}/">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="clean-build" depends="clean,jar" />
+
+	<!-- setup output locations -->
+	<target name="init"> 
+		<mkdir dir="${out.dir}" />
+		<mkdir dir="${doc.dir}" />
+		<mkdir dir="${jar.dir}" />
+	</target>
+	
+	<!-- compile sources -->
+	<target name="compile" depends="init">
+		<javac srcdir="${src.dir}" destdir="${class.dir}" classpathref="classpath" includeantruntime="false" />
+	</target>
+	
+	<!-- build the jar library -->
+	<target name="jar" depends="compile">
+		<jar destfile="${jar.loc}" basedir="${class.dir}">
+			<manifest>
+				<!-- attribute name="Main-Class" value="${main-class}"/ -->
+			</manifest>
+		</jar>
+	</target>
+	
+	<!-- execute any unit tests defined in the tests package -->
+	<target name="test" depends="jar">
+		
+		<!-- this command will setup the test json schema documents used by the unit tests -->
+		<exec dir="${test_files.dir}" executable="./generate_schemas.sh" />
+		
+		<junit printsummary="yes">
+			<classpath>
+				<path refid="classpath"/>
+				<path refid="jarpath"/>
+			</classpath>
+			
+			<batchtest fork="yes">
+				<fileset dir="${src.dir}" includes="us/kbase/typedobj/tests/Test*.java"/>
+			</batchtest>
+		</junit>
+	</target>
+	
+	<!-- remove any compiled artifacts -->
+	<target name="clean">
+		<delete dir="${out.di}"/>
+		<delete dir="${doc.dir}"/>
+		<delete dir="${jar.dir}"/>
+	</target>
+	
+	
+	
+</project>

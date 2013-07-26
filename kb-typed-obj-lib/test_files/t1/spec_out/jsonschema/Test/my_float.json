@@ -1,0 +1,21 @@
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_float",
+    "description":"",
+    "type":"number",
+    "kb-type":"float"
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_float",
+    "description":"",
+    "type":"number",
+    "kb-type":"float"
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_float",
+    "description":"",
+    "type":"number",
+    "kb-type":"float"
+}

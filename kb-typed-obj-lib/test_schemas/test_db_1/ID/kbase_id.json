@@ -1,8 +1,0 @@
-{
-    "$schema":"http://kbase.us/docs/typedobj/schema#",
-    "id":"kbase_id",
-    "description":"@id_reference",
-    "type":"string",
-    "kb-type":"string",
-    "kb-id-reference":[]
-}

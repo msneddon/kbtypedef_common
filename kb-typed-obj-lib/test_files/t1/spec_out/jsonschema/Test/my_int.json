@@ -1,0 +1,21 @@
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_int",
+    "description":"",
+    "type":"integer",
+    "kb-type":"int"
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_int",
+    "description":"",
+    "type":"integer",
+    "kb-type":"int"
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_int",
+    "description":"",
+    "type":"integer",
+    "kb-type":"int"
+}

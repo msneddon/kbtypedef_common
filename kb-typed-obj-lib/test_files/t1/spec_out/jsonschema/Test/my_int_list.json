@@ -1,0 +1,33 @@
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_int_list",
+    "description":"",
+    "type":"array",
+    "kb-type":"list",
+    "items": {
+        "type":"integer",
+        "kb-type":"int"
+    }
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_int_list",
+    "description":"",
+    "type":"array",
+    "kb-type":"list",
+    "items": {
+        "type":"integer",
+        "kb-type":"int"
+    }
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_int_list",
+    "description":"",
+    "type":"array",
+    "kb-type":"list",
+    "items": {
+        "type":"integer",
+        "kb-type":"int"
+    }
+}

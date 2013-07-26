@@ -1,0 +1,33 @@
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_float_mapping",
+    "description":"",
+    "type":"object",
+    "kb-type":"mapping",
+    "additionalProperties": {
+        "type":"number",
+        "kb-type":"float"
+    }
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_float_mapping",
+    "description":"",
+    "type":"object",
+    "kb-type":"mapping",
+    "additionalProperties": {
+        "type":"number",
+        "kb-type":"float"
+    }
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_float_mapping",
+    "description":"",
+    "type":"object",
+    "kb-type":"mapping",
+    "additionalProperties": {
+        "type":"number",
+        "kb-type":"float"
+    }
+}

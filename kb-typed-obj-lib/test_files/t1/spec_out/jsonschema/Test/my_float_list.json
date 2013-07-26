@@ -1,0 +1,33 @@
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_float_list",
+    "description":"",
+    "type":"array",
+    "kb-type":"list",
+    "items": {
+        "type":"number",
+        "kb-type":"float"
+    }
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_float_list",
+    "description":"",
+    "type":"array",
+    "kb-type":"list",
+    "items": {
+        "type":"number",
+        "kb-type":"float"
+    }
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"my_float_list",
+    "description":"",
+    "type":"array",
+    "kb-type":"list",
+    "items": {
+        "type":"number",
+        "kb-type":"float"
+    }
+}

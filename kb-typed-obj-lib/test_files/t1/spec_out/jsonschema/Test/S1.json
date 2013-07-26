@@ -1,0 +1,81 @@
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"S1",
+    "description":"",
+    "type":"object",
+    "kb-type":"structure",
+    "properties": {
+        "name": {
+            "type":"string",
+            "kb-type":"string"
+        },
+        "s": {
+            "type":"string",
+            "kb-type":"string"
+        },
+        "i": {
+            "type":"integer",
+            "kb-type":"int"
+        },
+        "f": {
+            "type":"number",
+            "kb-type":"float"
+        }
+    },
+    "additionalProperties":true,
+    "required":["name","s","i","f"]
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"S1",
+    "description":"",
+    "type":"object",
+    "kb-type":"structure",
+    "properties": {
+        "name": {
+            "type":"string",
+            "kb-type":"string"
+        },
+        "s": {
+            "type":"string",
+            "kb-type":"string"
+        },
+        "i": {
+            "type":"integer",
+            "kb-type":"int"
+        },
+        "f": {
+            "type":"number",
+            "kb-type":"float"
+        }
+    },
+    "additionalProperties":true,
+    "required":["name","s","i","f"]
+}
+{
+    "$schema":"http://kbase.us/docs/typedobj/schema#",
+    "id":"S1",
+    "description":"",
+    "type":"object",
+    "kb-type":"structure",
+    "properties": {
+        "name": {
+            "type":"string",
+            "kb-type":"string"
+        },
+        "s": {
+            "type":"string",
+            "kb-type":"string"
+        },
+        "i": {
+            "type":"integer",
+            "kb-type":"int"
+        },
+        "f": {
+            "type":"number",
+            "kb-type":"float"
+        }
+    },
+    "additionalProperties":true,
+    "required":["name","s","i","f"]
+}
