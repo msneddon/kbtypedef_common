@@ -1,0 +1,49 @@
+/*
+@author Andreas Wilke
+*/
+
+module Communities {
+/*
+Include types from other modules
+   include KBase::Genomes;
+   include KBase::Common;
+   parent  KBase::Metagenome # just example
+*/
+
+/*
+URI in form of a URL, e.g. ftp:// or http://...
+*/
+typedef string URI ;
+
+/*
+Data type , is controlled vocabulary. e.g. AbundanceData , Genome, Metagenome, ...
+*/
+typedef string DataType;
+
+typedef structure {
+        string ID ;
+        URI URL ;
+} Reference ;
+
+typedef structure {
+    string name;
+    string type;
+    string created;
+    string data;
+} Data;
+
+typedef structure {
+    string name;
+    string type;
+    string created;
+    Reference ref;
+} DataHandle;
+
+typedef DataHandle Metagenome ;
+typedef DataHandle Project;
+typedef DataHandle SequenceFile ;
+typedef Data Profile ;
+typedef Data Profile::Stats ;
+typedef Data Profile::Table ;
+
+};
