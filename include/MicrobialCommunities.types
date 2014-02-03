@@ -40,6 +40,15 @@ typedef structure {
     Reference ref;
 } DataHandle;
 
+typedef structure{ 
+	string name;
+	string type;
+	timestamp created ;
+	list<Reference> members ;	
+} Collection;
+
+typedef list<Reference> List ;
+
 typedef DataHandle Metagenome ;
 typedef DataHandle Project;
 typedef DataHandle SequenceFile ;
