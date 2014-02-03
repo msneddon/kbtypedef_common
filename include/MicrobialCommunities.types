@@ -19,6 +19,7 @@ typedef string URI ;
 Data type , is controlled vocabulary. e.g. AbundanceData , Genome, Metagenome, ...
 */
 typedef string DataType;
+typedef string FileType;
 
 typedef structure {
         string ID ;
