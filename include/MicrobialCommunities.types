@@ -15,9 +15,12 @@ URI in form of a URL, e.g. ftp:// or http://...
 */
 typedef string URI ;
 
+typedef string Timestamp ;
+
 /*
 Data type , is controlled vocabulary. e.g. AbundanceData , Genome, Metagenome, ...
 */
+
 typedef string DataType;
 typedef string FileType;
 
@@ -40,11 +43,11 @@ typedef structure {
     Reference ref;
 } DataHandle;
 
-typedef structure{ 
-	string name;
-	string type;
-	timestamp created ;
-	list<Reference> members ;	
+typedef structure{
+        string name;
+        string type;
+        Timestamp created ;
+        list<Reference> members ;
 } Collection;
 
 typedef list<Reference> List ;
@@ -52,8 +55,16 @@ typedef list<Reference> List ;
 typedef DataHandle Metagenome ;
 typedef DataHandle Project;
 typedef DataHandle SequenceFile ;
+
+/*
+
+        Profile is a general data type while Profile::Stats and Profile::Table are based on Profile but with additional data and methods
+        Since ":" is not a valid Character ....
+
+*/
+
 typedef Data Profile ;
-typedef Data Profile::Stats ;
-typedef Data Profile::Table ;
+typedef Data ProfileStats ;
+typedef Data ProfileTable ;
 
 };
