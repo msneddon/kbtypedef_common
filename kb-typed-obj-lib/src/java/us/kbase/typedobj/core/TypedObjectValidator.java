@@ -107,7 +107,7 @@ public final class TypedObjectValidator {
 			throws NoSuchTypeException, InstanceValidationException, BadJsonSchemaDocumentException
 	{
 		String version = null;
-        return validate(instanceRootNode, moduleName, typeName, version);
+		return validate(instanceRootNode, moduleName, typeName, version);
 	}
 	
 	
@@ -134,7 +134,7 @@ public final class TypedObjectValidator {
 		final JsonSchema schema = typeDefDB.getJsonSchema(moduleName, typeName);
 		
 		// Actually perform the validation and return the report
-        ProcessingReport report;
+		ProcessingReport report;
 		try {
 			report = schema.validate(instanceRootNode);
 		} catch (ProcessingException e) {
